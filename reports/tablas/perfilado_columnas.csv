@@ -1,0 +1,37 @@
+id,columna,rol,dtype,cardinalidad,n_null,n_sentinela,completitud_aparente,completitud_efectiva,brecha_completitud,moda,pct_moda,entropia_norm
+V01,id_contrato,Identificador,object,196391,0,0,100.0,100.0,0.0,CO1.PCCNTR.999902,0.001,1.0
+V02,nombre_entidad,Dimensión,object,3452,0,0,100.0,100.0,0.0,AGENCIA LOGISTICA DE LAS FUERZAS MILITARES,1.739,0.8756
+V03,departamento,Dimensión,object,33,0,7510,100.0,96.176,3.824,Distrito Capital de Bogotá,27.688,0.7944
+V04,ciudad,Dimensión,object,675,0,41672,100.0,78.7811,21.2189,Bogotá,21.507,0.696
+V05,orden,Dimensión,object,3,0,9,100.0,99.9954,0.0046,Territorial,49.543,0.6834
+V06,sector,Dimensión,object,24,0,24474,100.0,87.5381,12.4619,Servicio Público,21.749,0.7346
+V07,rama,Dimensión,object,4,0,9,100.0,99.9954,0.0046,Ejecutivo,80.132,0.4612
+V08,entidad_centralizada,Dimensión,object,2,0,0,100.0,100.0,0.0,Centralizada,79.515,0.7315
+V09,tipo_de_contrato,Dimensión,object,2,0,0,100.0,100.0,0.0,Suministros,54.296,0.9947
+V10,modalidad_de_contratacion,Dimensión,object,9,0,0,100.0,100.0,0.0,Mínima cuantía,59.958,0.5981
+V11,codigo_de_categoria_principal,Dimensión,object,10930,0,4779,100.0,97.5666,2.4334,V1.15101505,0.87,0.8278
+V12,objeto_del_contrato,Texto libre,object,175295,0,1111,100.0,99.4343,0.5657,SUMINISTRO DE MATERIAL MEDICO QUIRURGICO,0.124,0.9925
+V13,fecha_de_firma,Métrica temporal,datetime64[us],2437,0,0,100.0,100.0,0.0,2025-12-23 00:00:00,0.223,0.9452
+V14,fecha_de_inicio_del_contrato,Métrica temporal,datetime64[us],2796,2440,0,98.7576,98.7576,0.0,2025-12-23 00:00:00,0.24,0.9332
+V15,fecha_de_fin_del_contrato,Métrica temporal,datetime64[us],3187,0,0,100.0,99.9898,0.0102,2025-12-31 00:00:00,3.34,0.8371
+V16,duraci_n_del_contrato,Derivable,object,834,0,9490,100.0,95.1678,4.8322,30 Dia(s),7.457,0.6361
+V17,condiciones_de_entrega,Dimensión,object,30,0,49971,100.0,74.5554,25.4446,Como acordado previamente,23.001,0.5064
+V18,proveedor_adjudicado,Dimensión,object,31268,0,121,100.0,99.9384,0.0616,CENTRAL DE SUMINISTROS SAS,0.326,0.8802
+V19,documento_proveedor,Identificador secundario,object,29676,4,1566,99.998,99.2006,0.7974,804003744,0.329,0.881
+V20,es_pyme,Dimensión,object,2,0,0,100.0,100.0,0.0,Si,79.702,0.7279
+V21,es_grupo,Dimensión,object,2,0,0,100.0,100.0,0.0,No,97.9,0.147
+V22,g_nero_representante_legal,Dimensión,object,3,0,35822,100.0,81.7599,18.2401,Hombre,54.935,0.6799
+V23,nacionalidad_representante_legal,Dimensión,object,29,0,869,100.0,99.5575,0.4425,CO,99.494,0.0115
+V24,valor_del_contrato,Métrica,float64,140287,0,0,100.0,100.0,0.0,30000000.0,0.609,0.9313
+V25,valor_pagado,Métrica,int64,77582,0,0,100.0,100.0,0.0,0,54.809,0.5049
+V26,valor_facturado,Métrica,int64,90662,0,0,100.0,100.0,0.0,0,46.756,0.5825
+V27,valor_pendiente_de_pago,Métrica,int64,102172,0,0,100.0,100.0,0.0,0,29.346,0.7196
+V28,dias_adicionados,Métrica,int64,380,0,0,100.0,100.0,0.0,0,90.493,0.1251
+V29,habilita_pago_adelantado,Dimensión,object,2,0,28507,100.0,85.4846,14.5154,No,99.8,0.0208
+V30,el_contrato_puede_ser_prorrogado,Dimensión,object,2,0,0,100.0,100.0,0.0,No,80.441,0.713
+V31,origen_de_los_recursos,Dimensión,object,2,0,0,100.0,100.0,0.0,Distribuido,80.891,0.7038
+V32,destino_gasto,Dimensión,object,2,0,911,100.0,99.5361,0.4639,Funcionamiento,59.902,0.9715
+V33,estado_contrato,Dimensión,object,9,0,0,100.0,100.0,0.0,terminado,27.613,0.6852
+V34,liquidaci_n,Dimensión,object,2,0,0,100.0,100.0,0.0,No,60.297,0.9692
+V35,obligaci_n_ambiental,Dimensión,object,2,0,0,100.0,100.0,0.0,No,95.61,0.2599
+V36,urlproceso,Enlace,object,183042,0,0,100.0,100.0,0.0,{'url': 'https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID,0.133,0.9943

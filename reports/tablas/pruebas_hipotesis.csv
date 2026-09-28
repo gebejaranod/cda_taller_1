@@ -1,0 +1,13 @@
+hipotesis,variable,objetivo,prueba,n,p,significativo,efecto,valor_efecto,IC_lo,IC_hi,magnitud,supuesto_ok
+H1,modalidad_de_contratacion,tiene_adicion,chi2 de independencia,196391,0.000e+00,True,V de Cramer,0.1444,,,pequeno,True
+H2,decil,tasa_%,Correlacion de Pearson,10,1.834e-05,True,r de Pearson,0.9541,0.8127,0.9894,,True
+H2b,log_valor,desviacion,Z test de dos medias,196391,0.000e+00,True,diferencia de medias,0.4488,0.4383,0.4593,,True
+H3,destino_gasto,subejecucion_parcial,chi2 de independencia,88142,1.685e-94,True,diferencia de proporciones (pp),4.2852,3.8844,4.6861,,True
+H4-orden,orden,tiene_adicion,chi2 de independencia,196382,6.715e-11,True,V de Cramer,0.0154,,,despreciable,True
+H4-sector,sector,tiene_adicion,chi2 de independencia,171917,5.326e-284,True,V de Cramer,0.0889,,,despreciable,True
+H5-el_contrato_puede_ser_prorrogado,el_contrato_puede_ser_prorrogado,tiene_adicion,chi2 de independencia,196391,1.021e-138,True,V de Cramer,0.0566,,,despreciable,True
+H5-habilita_pago_adelantado,habilita_pago_adelantado,tiene_adicion,chi2 de independencia,167884,2.574e-01,False,V de Cramer,0.0028,,,despreciable,True
+H6,sector,dias_adicionados,ANOVA de Welch,16678,1.265e-94,True,eta cuadrado,0.0318,,,pequeno,True
+H7,genero_representante_legal,desviacion,chi2 de independencia,160569,8.906e-04,True,V de Cramer,0.0094,,,despreciable,True
+H8-orden,orden,pago_cero,chi2 de independencia,196382,7.270e-58,True,V de Cramer,0.0366,,,despreciable,True
+H8-sector,sector,pago_cero,chi2 de independencia,171917,0.000e+00,True,V de Cramer,0.2221,,,pequeno,True

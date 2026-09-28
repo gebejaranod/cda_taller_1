@@ -1,0 +1,5 @@
+hipotesis,variable,objetivo,prueba,n,p,efecto,valor_efecto
+H2-rob,decil,tasa_%,Correlacion de Spearman,10,6.646897422032013e-64,rho de Spearman,0.999999
+H2-rob-fila,decil_valor,desviacion,Spearman (tendencia),196391,0.0,rho de Spearman,0.18420152421564712
+H2b-rob,log_valor,desviacion,Mann-Whitney U,196391,0.0,delta de Cliff,0.31564379475929516
+H6-rob,sector,dias_adicionados,Kruskal-Wallis,16678,1.5059491679447895e-113,epsilon cuadrado,0.034921624603022026

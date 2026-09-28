@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Focalizar la supervisión · Taller 1</title>
+<meta name="description" content="Presentación ejecutiva del Taller 1 (MINE-4101): qué contratos de bienes supervisar primero.">
+<style>
+/* =====================================================================
+   Presentación autocontenida: no usa servidor, red ni archivos externos.
+   Se abre con doble clic. Navegación: flechas, espacio, Inicio/Fin,
+   F (pantalla completa), I (índice). Ctrl+P la exporta a PDF, una
+   lámina por página.
+   ===================================================================== */
+:root{
+  /* Identidad Uniandes: amarillo y negro. El amarillo es una aproximación;
+     si se tiene el código exacto del manual de identidad, basta cambiarlo aquí. */
+  --amarillo:#FFD100;
+  --amarillo-suave:#FFF3C7;
+  --negro:#0B0B0B;
+  --tinta:#141414;
+  --tinta-2:#4D4D4D;
+  --tinta-3:#6B6B6B;
+  --linea:#E3E3E0;
+  --fondo-suave:#F4F4F1;
+  --blanco:#FFFFFF;
+  --marca-datos:#262626;
+  --referencia:#8C8C8C;
+  --fuente:"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"Cascadia Mono",Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#1B1B1B;font-family:var(--fuente);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+code{font-family:var(--mono);font-size:.88em}
+#escenario{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0}
+
+/* ---------- lámina ---------- */
+.slide{position:absolute;left:0;top:0;width:1600px;height:900px;display:flex;flex-direction:column;padding:56px 72px 0;background:var(--blanco);color:var(--tinta);overflow:hidden;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s linear .35s}
+.slide.activa{opacity:1;visibility:visible;transition:opacity .35s ease}
+.slide::before{content:"";position:absolute;left:0;top:0;right:0;height:10px;background:var(--amarillo)}
+.slide.oscura{padding:0;background:var(--negro);color:#fff}
+.slide.oscura::before{display:none}
+.slide > header{flex:0 0 auto}
+.cuerpo{flex:1 1 auto;min-height:0;position:relative;margin-top:30px}
+.pie{flex:0 0 62px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--linea);font-size:14px;color:var(--tinta-3);margin-top:18px}
+.pie .num{font-variant-numeric:tabular-nums;font-weight:600}
+
+.kicker{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-2)}
+.kicker::before{content:"";flex:0 0 14px;height:14px;background:var(--amarillo)}
+.titulo{font-size:42px;line-height:1.12;font-weight:700;letter-spacing:-.018em;margin:14px 0 0;max-width:1456px}
+.resaltado{background:linear-gradient(transparent 60%,var(--amarillo) 60%);padding:0 .06em}
+.sub{font-size:14px;letter-spacing:.09em;text-transform:uppercase;color:var(--tinta-2);font-weight:700;margin:0 0 8px}
+.dos-col{display:grid;column-gap:48px;height:100%}
+.dos-col > *{min-height:0}
+.grafico{width:100%;height:100%;position:relative}
+.grafico svg{display:block;overflow:visible}
+.ajustable{height:100%;display:flex;justify-content:center;align-items:flex-start}
+.ajustable > *{flex:0 0 auto;transform-origin:top center}
+.chip{display:inline-flex;align-items:center;font-size:15px;font-weight:700;line-height:1.1;padding:7px 13px;border-radius:999px;white-space:nowrap}
+.chip.si{background:var(--amarillo);color:var(--negro)}
+.chip.no{background:#fff;color:var(--tinta);box-shadow:inset 0 0 0 1.5px var(--tinta)}
+.chip.neutro{background:#E9E9E5;color:var(--tinta)}
+.lateral{display:flex;flex-direction:column;gap:26px;justify-content:center}
+.texto{font-size:19px;line-height:1.5;color:var(--tinta-2);margin:0}
+.texto b{color:var(--tinta)}
+.aviso{display:flex;gap:16px;align-items:flex-start;background:var(--amarillo);border-radius:14px;padding:18px 24px;font-size:19px;line-height:1.45;color:var(--negro)}
+.aviso::before{content:"!";flex:0 0 32px;height:32px;border-radius:50%;background:var(--negro);color:var(--amarillo);font-weight:800;display:grid;place-items:center;font-size:18px}
+
+/* ---------- portada ---------- */
+.portada{flex-direction:row}
+.portada-izq{flex:1;padding:78px 70px 62px 90px;display:flex;flex-direction:column}
+.inst{display:flex;align-items:center;gap:14px;font-size:18px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.inst .cuadro{width:22px;height:22px;background:var(--amarillo)}
+.curso{margin-top:10px;font-size:16px;color:#BDBDBD;letter-spacing:.02em}
+.portada h1{margin:auto 0 0;font-size:90px;line-height:1.02;font-weight:800;letter-spacing:-.03em}
+.portada-sub{font-size:29px;line-height:1.3;color:#E3E3E3;margin:26px 0 0;max-width:780px}
+.portada-pie{margin-top:auto;display:flex;gap:56px;padding-top:26px;border-top:1px solid #333}
+.portada-pie small{display:block;font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;color:#9A9A9A}
+.portada-pie b{display:block;font-size:18px;margin-top:5px;font-weight:600}
+.portada-der{flex:0 0 520px;background:var(--amarillo);color:var(--negro);padding:70px 60px;display:flex;flex-direction:column;justify-content:center}
+.portada-der .n{font-size:118px;font-weight:800;line-height:.95;letter-spacing:-.04em}
+.portada-der p{font-size:25px;line-height:1.38;margin:22px 0 0;font-weight:600}
+.portada-der small{display:block;font-size:17px;margin-top:26px;color:#3A3A3A;line-height:1.45}
+
+/* ---------- tres mensajes ---------- */
+.resumen-cuerpo{display:flex;flex-direction:column}
+.tres{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;flex:1 1 auto;min-height:0}
+.mensaje{background:var(--fondo-suave);border-radius:20px;padding:92px 42px 40px;display:flex;flex-direction:column;justify-content:flex-start}
+.mensaje .cifra{font-size:96px;font-weight:800;letter-spacing:-.035em;line-height:1}
+.mensaje .frase{font-size:26px;line-height:1.4;margin:34px 0 0;color:var(--tinta-2)}
+.mensaje .frase b{color:var(--tinta)}
+.piso{display:flex;align-items:center;gap:14px;margin:26px 0 0;font-size:21px;color:var(--tinta-2)}
+.piso span{flex:0 0 34px;height:34px;border-radius:50%;background:var(--amarillo);color:var(--negro);display:grid;place-items:center;font-weight:800}
+
+/* ---------- arquitectura ---------- */
+.arq2{position:relative;width:1456px;height:626px}
+.arq2 > *{position:absolute}
+.carril{left:0;width:196px;height:228px;background:var(--negro);color:#fff;border-radius:14px;padding:22px 20px 20px;display:flex;flex-direction:column}
+.etiqueta{align-self:flex-start;font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;background:var(--amarillo);color:var(--negro);padding:5px 10px;border-radius:4px}
+.carril b{font-size:24px;line-height:1.18;margin-top:16px}
+.carril small{font-size:14px;color:#BDBDBD;margin-top:auto;line-height:1.35}
+.paso2{height:120px;border:2px solid var(--tinta);border-radius:12px;background:#fff;padding:20px 16px 10px}
+.paso2 i{position:absolute;top:-15px;left:14px;width:30px;height:30px;border-radius:50%;background:var(--amarillo);color:var(--negro);font-style:normal;font-weight:800;font-size:15px;display:grid;place-items:center;box-shadow:0 0 0 4px #fff}
+.paso2 b{display:block;font-size:19px;line-height:1.22}
+.paso2 span{display:block;font-size:14.5px;line-height:1.35;color:var(--tinta-3);margin-top:6px}
+.porque{height:84px;background:var(--amarillo-suave);border-radius:10px;padding:9px 12px 9px 30px;font-size:14.5px;line-height:1.36;display:flex;align-items:center}
+.porque::before{content:"\2192";position:absolute;left:11px;top:50%;transform:translateY(-52%);font-weight:800}
+.control{left:0;top:256px;width:1456px;height:84px;background:var(--negro);color:#fff;border-radius:14px;display:flex;align-items:center;gap:30px;padding:0 28px 0 20px}
+.control .etiqueta{align-self:center;flex:0 0 auto}
+.control p{margin:0;font-size:19.5px;line-height:1.4}
+.control p b{color:var(--amarillo)}
+.arq2-pie{left:0;top:600px;width:1456px;height:26px;display:flex;align-items:center;gap:26px;font-size:14.5px;color:var(--tinta-3)}
+.arq2-pie .m{display:inline-block;width:24px;height:15px;border-radius:4px;vertical-align:-2px;margin-right:8px}
+.arq2-pie .m1{border:2px solid var(--tinta);background:#fff}
+.arq2-pie .m2{background:var(--amarillo-suave);border:1px solid #EADFA8}
+.arq2-pie .transv{margin-left:auto}
+.arq2 svg{left:0;top:0;width:1456px;height:626px;pointer-events:none;overflow:visible}
+.arq2 .fl{stroke:var(--tinta);stroke-width:2.5;fill:none}
+
+/* ---------- hallazgo ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+
+/* ---------- cuánto supervisar ---------- */
+.opciones{display:flex;flex-direction:column;gap:20px;justify-content:center}
+.opcion{border-radius:18px;padding:24px 28px;background:var(--fondo-suave)}
+.opcion.clave{background:var(--negro);color:#fff}
+.opcion h3{font-size:34px;margin:14px 0 8px;font-weight:800;letter-spacing:-.01em}
+.opcion p{font-size:20px;line-height:1.45;margin:0;color:var(--tinta-2)}
+.opcion.clave p{color:#D9D9D9}
+.opcion b{color:var(--tinta)}
+.opcion.clave b{color:var(--amarillo)}
+
+/* ---------- segundo frente ---------- */
+.gigante{display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--linea);padding-right:40px}
+.gigante b{font-size:128px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.gigante b span{background:linear-gradient(transparent 62%,var(--amarillo) 62%)}
+.gigante p{font-size:24px;line-height:1.4;color:var(--tinta-2);margin:22px 0 0}
+.col-apilada{display:flex;flex-direction:column;min-height:0}
+.col-apilada .grafico{flex:1 1 auto;min-height:0}
+
+/* ---------- decisiones ---------- */
+.decisiones-cuerpo{display:flex;flex-direction:column}
+.decisiones{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:26px;flex:1 1 auto;min-height:0}
+.decisiones li{background:var(--fondo-suave);border-radius:18px;padding:30px 34px;display:grid;grid-template-columns:74px 1fr;gap:18px;align-items:center}
+.decisiones .n{font-size:64px;font-weight:800;line-height:1;width:fit-content;background:linear-gradient(transparent 58%,var(--amarillo) 58%);padding:0 4px}
+.decisiones b{display:block;font-size:27px;line-height:1.25}
+.decisiones p{margin:8px 0 0;font-size:19.5px;line-height:1.45;color:var(--tinta-2)}
+.cierre-franja{display:flex;align-items:center;gap:22px;margin-top:24px}
+.limites{flex:1;display:flex;align-items:center;gap:16px;font-size:17px;color:var(--tinta-2);border:1.5px solid var(--linea);border-radius:12px;padding:14px 20px;line-height:1.4}
+.limites span{flex:0 0 auto;font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta);background:var(--fondo-suave);padding:5px 10px;border-radius:4px}
+.gracias{flex:0 0 auto;background:var(--negro);color:var(--amarillo);font-size:22px;font-weight:800;border-radius:12px;padding:17px 26px}
+
+/* ---------- gráficos SVG ---------- */
+.g-grid{stroke:#EBEBE7;stroke-width:1}
+.g-eje{stroke:var(--tinta);stroke-width:1.5}
+.g-tick{font-size:14px;fill:var(--tinta-3);font-family:var(--fuente)}
+.g-cat{font-size:16.5px;fill:var(--tinta);font-family:var(--fuente)}
+.g-cat.fuerte{font-weight:700}
+.g-val{font-size:17px;font-weight:700;fill:var(--tinta);font-family:var(--fuente);paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round}
+.g-barra{fill:var(--marca-datos);transition:fill .15s}
+.g-barra:hover{fill:#000}
+.g-ref{stroke:var(--referencia);stroke-width:2;stroke-dasharray:6 5}
+.g-ref-etq{font-size:14.5px;fill:var(--tinta-2);font-weight:600;font-family:var(--fuente)}
+.g-eje-tit{font-size:15px;fill:var(--tinta-2);font-family:var(--fuente)}
+.g-eje-tit.fuerte{font-weight:700;fill:var(--tinta)}
+.g-celda{font-size:16.5px;font-weight:700;font-family:var(--fuente)}
+.g-area{fill:var(--amarillo-suave)}
+.g-azar{stroke:var(--referencia);stroke-width:2;stroke-dasharray:7 6}
+.g-linea{fill:none;stroke:var(--marca-datos);stroke-width:3.5;stroke-linejoin:round}
+.g-umbral{fill:var(--amarillo);stroke:var(--tinta);stroke-width:2.5}
+.g-anot{font-size:16px;fill:var(--tinta);font-weight:700;font-family:var(--fuente);paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round}
+.g-anot-2{font-size:15px;fill:var(--tinta-2);font-family:var(--fuente)}
+.g-guia-l{stroke:var(--tinta);stroke-width:1.2;stroke-dasharray:3 3}
+.g-guia-p{fill:var(--tinta);stroke:#fff;stroke-width:2}
+.g-sep{stroke:var(--tinta-3);stroke-width:1;stroke-dasharray:4 4}
+.g-marca{font-size:12.5px;font-weight:800;fill:#fff;font-family:var(--fuente)}
+
+/* ---------- barra de progreso, controles, índice, ayuda ---------- */
+#progreso{position:absolute;left:0;bottom:0;height:5px;background:var(--amarillo);z-index:5;transition:width .3s ease}
+#controles{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);display:flex;align-items:center;gap:2px;background:rgba(20,20,20,.88);color:#fff;border-radius:999px;padding:4px 8px;font:600 13px var(--fuente);z-index:50;transition:opacity .4s}
+#controles.dormido{opacity:0}
+#controles:hover,#controles:focus-within{opacity:1}
+#controles button{all:unset;cursor:pointer;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;font-size:16px;color:#fff}
+#controles button:hover{background:rgba(255,255,255,.16)}
+#controles button:focus-visible{outline:2px solid var(--amarillo)}
+#contador{min-width:52px;text-align:center;font-variant-numeric:tabular-nums}
+#indice{position:fixed;inset:0;background:rgba(0,0,0,.72);display:grid;place-items:center;z-index:60}
+#indice[hidden]{display:none}
+.ind-caja{background:#fff;border-radius:16px;padding:28px 32px;width:min(560px,92vw);max-height:86vh;overflow:auto}
+.ind-caja h3{margin:0 0 12px;font-size:20px}
+#ind-lista{margin:0;padding-left:24px;font-size:16px;line-height:2}
+#ind-lista a{color:var(--tinta);text-decoration:none;padding:1px 4px;border-radius:4px}
+#ind-lista a:hover,#ind-lista a:focus-visible{background:var(--amarillo);outline:none}
+.ind-caja p{margin:16px 0 0;font-size:13.5px;color:var(--tinta-3);line-height:1.5}
+#tip{position:fixed;z-index:70;pointer-events:none;background:var(--negro);color:#fff;font:14px/1.45 var(--fuente);padding:9px 12px;border-radius:8px;max-width:360px;box-shadow:0 6px 20px rgba(0,0,0,.28)}
+#tip[hidden]{display:none}
+#tip b{color:var(--amarillo)}
+
+@media print{
+  @page{size:1600px 900px;margin:0}
+  html,body{overflow:visible;height:auto;background:#fff}
+  #escenario{position:static;transform:none !important;height:auto}
+  .slide{position:relative;opacity:1 !important;visibility:visible !important;transition:none;break-after:page;page-break-after:always}
+  #controles,#indice,#tip,#progreso{display:none !important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<noscript><p style="color:#fff;padding:24px">Esta presentación necesita JavaScript para dibujar las gráficas y navegar entre láminas.</p></noscript>
+
+<div id="escenario">
+
+<!-- 1 · PORTADA -->
+<section class="slide oscura portada sin-pie" data-titulo="Portada">
+  <div class="portada-izq">
+    <div class="inst"><span class="cuadro"></span>Universidad de los Andes</div>
+    <div class="curso">MINE-4101 · Ciencia de Datos Aplicada · Taller 1 · Semestre 2026-20</div>
+    <h1>¿A qué contratos<br>mirar primero?</h1>
+    <p class="portada-sub">Criterios basados en datos para focalizar la supervisión de contratos de bienes</p>
+    <div class="portada-pie">
+      <div><small>Autor</small><b>Gabriel Esteban Bejarano Delgado</b></div>
+      <div><small>Fecha</small><b>Septiembre de 2026</b></div>
+    </div>
+  </div>
+  <div class="portada-der">
+    <div class="n">196.391</div>
+    <p>contratos de compraventa y suministros firmados entre 2019 y 2025.</p>
+    <small>Fuente: SECOP II. Solo en 2025 se firmaron 40.113, más de los que un equipo pequeño puede seguir de cerca.</small>
+  </div>
+</section>
+
+<!-- 2 · TRES MENSAJES -->
+<section class="slide" data-titulo="Tres mensajes">
+  <header>
+    <div class="kicker">Resumen</div>
+    <h2 class="titulo">Tres mensajes clave</h2>
+  </header>
+  <div class="cuerpo resumen-cuerpo">
+    <div class="tres">
+      <article class="mensaje">
+        <div class="cifra"><span class="resaltado">12×</span></div>
+        <p class="frase">Dos datos que se conocen al firmar, <b>el valor y la modalidad</b>, separan el riesgo: del 3,2 % al 41 % de contratos que se desvían.</p>
+      </article>
+      <article class="mensaje">
+        <div class="cifra"><span class="resaltado">48 %</span></div>
+        <p class="frase">de las desviaciones se detectan revisando <b>solo el 30 %</b> de los contratos: los de las combinaciones de mayor riesgo.</p>
+      </article>
+      <article class="mensaje">
+        <div class="cifra"><span class="resaltado">54,7 %</span></div>
+        <p class="frase">de los contratos <b>no reporta ningún pago</b>. El problema más grande es de registro, no de ejecución.</p>
+      </article>
+    </div>
+    <p class="piso"><span>!</span>Toda tasa es un piso: donde no hay registro de pagos, el incumplimiento no se puede ver.</p>
+  </div>
+</section>
+
+<!-- 3 · ARQUITECTURA -->
+<section class="slide" data-titulo="Cómo se construyó la evidencia">
+  <header>
+    <div class="kicker">Cómo se construyó la evidencia</div>
+    <h2 class="titulo">Dos iteraciones, un punto de control: primero entender, después probar</h2>
+  </header>
+  <div class="cuerpo">
+    <div class="ajustable">
+      <div class="arq2">
+        <!-- Iteración 1 -->
+        <div class="carril" style="top:0"><span class="etiqueta">Iteración 1</span><b>Entender los datos</b><small>notebook 01<br>¿qué pueden medir?</small></div>
+        <div class="paso2" style="left:224px;top:14px;width:200px" data-tip="<b>Perfilado de las 36 columnas</b><br>Tipos de variable, cardinalidad, moda, entropía normalizada y búsqueda de centinelas: 206.821 celdas decían «No Definido», «No aplica» o «xxxx»."><i>1</i><b>Perfilado</b><span>tipos · cardinalidad · entropía · centinelas</span></div>
+        <div class="paso2" style="left:482px;top:14px;width:200px" data-tip="<b>Reglas de integridad</b><br>21 reglas de negocio y completitud real frente a aparente. Fechas del año 202 al 2065, estados sin actualizar y 13.726 adiciones sin prórroga."><i>2</i><b>Reglas de integridad</b><span>21 reglas · completitud real</span></div>
+        <div class="paso2" style="left:740px;top:14px;width:200px" data-tip="<b>Estabilidad temporal</b><br>Tasas por año y por mes. 2019 se registró distinto y la adición salta en 2025; quitar cualquiera de los dos años no cambia las conclusiones."><i>3</i><b>Estabilidad temporal</b><span>tasas por año y por mes</span></div>
+        <div class="paso2" style="left:998px;top:14px;width:200px" data-tip="<b>Viabilidad del objetivo</b><br>Las tres desviaciones del encargo marcaban al 83,8 % de los contratos. Se redefinió el objetivo: adición de plazo o subejecución parcial real (13,5 %)."><i>4</i><b>Viabilidad del objetivo</b><span>prevalencias · φ de Matthews</span></div>
+        <div class="paso2" style="left:1256px;top:14px;width:200px" data-tip="<b>Descriptiva y tratamiento</b><br>Un contrato concentra el 99,47 % del valor total: se trabaja con mediana y logaritmos. Pipeline de 11 pasos con bitácora; ninguna fila eliminada."><i>5</i><b>Descriptiva y tratamiento</b><span>mediana · log₁₀ · 11 pasos</span></div>
+        <div class="porque" style="left:224px;top:144px;width:200px">Separa faltantes reales de «No Definido» antes de contar.</div>
+        <div class="porque" style="left:482px;top:144px;width:200px">Valida las fechas antes de medir plazos.</div>
+        <div class="porque" style="left:740px;top:144px;width:200px">Fija el periodo antes de tomar muestras.</div>
+        <div class="porque" style="left:998px;top:144px;width:200px">Define qué se explica: la desviación, 13,5 %.</div>
+        <div class="porque" style="left:1256px;top:144px;width:200px">Deja un solo dataset certificado para las pruebas.</div>
+
+        <!-- Punto de control -->
+        <div class="control"><span class="etiqueta">Punto de control</span><p><b>Por qué separar:</b> no diseñar pruebas antes de saber qué pueden medir los datos. Aquí se congelan el objetivo, los atributos candidatos, las muestras y el periodo, antes de ver un solo resultado.</p></div>
+
+        <!-- Iteración 2 -->
+        <div class="carril" style="top:356px"><span class="etiqueta">Iteración 2</span><b>Probar y operar</b><small>notebooks 02 a 04<br>¿qué anticipa el riesgo?</small></div>
+        <div class="paso2" style="left:224px;top:370px;width:260px" data-tip="<b>Criterios a priori</b><br>α = 0,05 y umbrales de tamaño de efecto (V ≥ 0,10, r ≥ 0,30, factor ≥ 1,5×, η² ≥ 0,06, 2 pp) declarados en src/config.py antes de correr las pruebas."><i>1</i><b>Criterios a priori</b><span>umbrales de efecto · árbol de decisión</span></div>
+        <div class="paso2" style="left:548px;top:370px;width:260px" data-tip="<b>Pruebas bivariadas</b><br>12 pruebas: 9 chi-cuadrado, 1 correlación, 1 Z test y 1 ANOVA de Welch, cada una con su tamaño de efecto. 11 son significativas; solo 5 superan su umbral."><i>2</i><b>Pruebas bivariadas</b><span>χ² · correlación · Z · ANOVA + tamaño del efecto</span></div>
+        <div class="paso2" style="left:872px;top:370px;width:260px" data-tip="<b>Control por composición</b><br>El chi-cuadrado repetido dentro de cada rango de valor, y la tasa observada de cada grupo frente a la que anticipa su mezcla de valor y modalidad. Separa el efecto propio de un atributo del de los contratos que lo acompañan, sin modelos."><i>3</i><b>Control por composición</b><span>χ² por rango de valor · tasa esperada</span></div>
+        <div class="paso2" style="left:1196px;top:370px;width:260px" data-tip="<b>Tabla de riesgo y cobertura</b><br>La tasa de desviación de cada combinación de valor y modalidad, con su intervalo de confianza del 95 %. Ordenando por ella, revisar el 30 % de los contratos detecta el 48 % de las desviaciones."><i>4</i><b>Tabla de riesgo</b><span>tasas con IC 95 % · cobertura</span></div>
+        <div class="porque" style="left:224px;top:500px;width:260px">El umbral no se acomoda al resultado.</div>
+        <div class="porque" style="left:548px;top:500px;width:260px">Filtra: de doce pruebas, solo cinco superan su umbral de efecto.</div>
+        <div class="porque" style="left:872px;top:500px;width:260px">Aísla el efecto propio: el destino no llega; quedan valor y modalidad.</div>
+        <div class="porque" style="left:1196px;top:500px;width:260px">Cuánto rinde revisar: 30 % revisado, 48 % detectado.</div>
+
+        <svg viewBox="0 0 1456 626" aria-hidden="true">
+          <defs><marker id="punta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#141414"/></marker></defs>
+          <path class="fl" d="M430,74 H474" marker-end="url(#punta)"/>
+          <path class="fl" d="M688,74 H732" marker-end="url(#punta)"/>
+          <path class="fl" d="M946,74 H990" marker-end="url(#punta)"/>
+          <path class="fl" d="M1204,74 H1248" marker-end="url(#punta)"/>
+          <path class="fl" d="M1356,230 V250" marker-end="url(#punta)"/>
+          <path class="fl" d="M354,342 V364" marker-end="url(#punta)"/>
+          <path class="fl" d="M490,430 H540" marker-end="url(#punta)"/>
+          <path class="fl" d="M814,430 H864" marker-end="url(#punta)"/>
+          <path class="fl" d="M1138,430 H1188" marker-end="url(#punta)"/>
+        </svg>
+        <div class="arq2-pie"><span><span class="m m1"></span>herramienta, en el orden en que se aplicó</span><span><span class="m m2"></span>por qué va antes: lo que habilita al paso siguiente</span><span class="transv">Transversal: solo herramientas vistas en clase · umbrales fijados antes de ver los datos · ninguna fila eliminada</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · QUÉ ANTICIPA LA DESVIACIÓN -->
+<section class="slide" data-titulo="Qué anticipa una desviación">
+  <header>
+    <div class="kicker">Hallazgo principal</div>
+    <h2 class="titulo">El valor y la modalidad separan el riesgo: del 3,2 % al 41 %</h2>
+  </header>
+  <div class="cuerpo dos-col" style="grid-template-columns:1060px 1fr">
+    <div class="grafico" id="g-heatmap"></div>
+    <aside class="lateral">
+      <p class="texto"><b>Cómo leerlo.</b> Cada celda es el porcentaje de contratos que se desvió. En cada fila la tasa sube con el valor; en cada columna cambia con la modalidad.</p>
+      <div><h4 class="sub">No pesan lo suficiente</h4><div class="chips"><span class="chip no">Sector</span><span class="chip no">Tipo de entidad</span><span class="chip no">Destino del gasto</span><span class="chip no">Género (control)</span></div></div>
+      <p class="texto"><b>Por qué solo dos.</b> Con 196.000 contratos casi todo sale «significativo». Decidió el tamaño del efecto, con umbrales fijados antes de ver los datos.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- 5 · CUÁNTO SUPERVISAR -->
+<section class="slide" data-titulo="Cuánto supervisar">
+  <header>
+    <div class="kicker">El instrumento</div>
+    <h2 class="titulo">Revisar el 30 % de los contratos detecta el 48 % de las desviaciones</h2>
+  </header>
+  <div class="cuerpo dos-col" style="grid-template-columns:880px 1fr">
+    <div class="grafico" id="g-cobertura"></div>
+    <div class="opciones">
+      <div class="opcion clave"><span class="chip si">Empezar aquí</span><h3>Nivel 1</h3><p><b>5 %</b> de los contratos: más de 1.000 millones, y desde 200 millones si es licitación o régimen especial con ofertas. Se desvía <b>1 de cada 3</b>, 2,5 veces más que al azar.</p></div>
+      <div class="opcion"><span class="chip neutro">Ampliar según capacidad</span><h3>Nivel 2</h3><p><b>1 de cada 7</b> contratos: suma la mayor parte de los demás de 200 a 1.000 millones. Detecta el <b>28,5 %</b> de las desviaciones.</p></div>
+      <p class="texto">La regla sale de la tabla de la lámina anterior y se consulta a mano con el valor y la modalidad del contrato. Prioriza, no detecta todo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · SEGUNDO FRENTE -->
+<section class="slide" data-titulo="El frente del registro">
+  <header>
+    <div class="kicker">Segundo frente</div>
+    <h2 class="titulo">El problema más grande es de registro, no de ejecución</h2>
+  </header>
+  <div class="cuerpo dos-col" style="grid-template-columns:430px 1fr">
+    <div class="gigante"><b><span>54,7 %</span></b><p>de los contratos no tiene ningún pago reportado en la plataforma.</p></div>
+    <div class="col-apilada">
+      <h4 class="sub">Contratos sin pago reportado · los cuatro sectores que menos reportan y el que más</h4>
+      <div class="grafico" id="g-sectores"></div>
+      <div class="aviso" style="margin-top:18px"><div><b>Un sector que no reporta puede parecer de bajo riesgo.</b> Transporte, que deja sin pago el 70 % de sus contratos, se desvía menos de lo esperado para su valor y modalidad; Trabajo, el que mejor reporta, más.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · DECISIONES -->
+<section class="slide" data-titulo="Decisiones propuestas">
+  <header>
+    <div class="kicker">Qué se propone</div>
+    <h2 class="titulo">Cuatro decisiones propuestas</h2>
+  </header>
+  <div class="cuerpo decisiones-cuerpo">
+    <ol class="decisiones">
+      <li><span class="n">1</span><div><b>Adoptar la tabla de riesgo y supervisar el nivel 1</b><p>5 % de los contratos, con 1 de cada 3 desviado; ampliar al nivel 2 según la capacidad del equipo.</p></div></li>
+      <li><span class="n">2</span><div><b>Revisar ya 13.726 contratos</b><p>Recibieron adición de plazo pese a estar marcados como no prorrogables.</p></div></li>
+      <li><span class="n">3</span><div><b>Exigir el registro completo de pagos</b><p>Empezar por Salud, Interior, Agricultura y Transporte.</p></div></li>
+      <li><span class="n">4</span><div><b>Recalcular la tabla cada año</b><p>El salto de 2025 y la inflación desplazan las tasas y los cortes de valor.</p></div></li>
+    </ol>
+    <div class="cierre-franja">
+      <div class="limites"><span>Límites</span>Las tasas son un piso · la tabla prioriza, no detecta todo · asociación, no causalidad · solo bienes en SECOP II</div>
+      <div class="gracias">Gracias · ¿Preguntas?</div>
+    </div>
+  </div>
+</section>
+
+<div id="progreso"></div>
+</div>
+
+<div id="controles" role="toolbar" aria-label="Navegación">
+  <button id="b-prev" type="button" aria-label="Lámina anterior">&#8249;</button>
+  <span id="contador">1 / 1</span>
+  <button id="b-next" type="button" aria-label="Lámina siguiente">&#8250;</button>
+  <button id="b-ind" type="button" aria-label="Índice">&#9776;</button>
+  <button id="b-fs" type="button" aria-label="Pantalla completa">&#9974;</button>
+</div>
+<nav id="indice" hidden aria-label="Índice de láminas">
+  <div class="ind-caja">
+    <h3>Índice</h3>
+    <ol id="ind-lista"></ol>
+    <p>← → o espacio para avanzar · Inicio y Fin · F: pantalla completa · I o Esc: índice · Ctrl+P: exportar a PDF. Pase el cursor sobre las gráficas y el diagrama para ver el detalle.</p>
+  </div>
+</nav>
+<div id="tip" hidden></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------
+     Datos. Salen de reports/tablas/; ninguna cifra se calcula aquí.
+     ------------------------------------------------------------------ */
+  // combinaciones_riesgo.csv: [tasa %, contratos, eficiencia]; null = menos de 300 contratos.
+  const HEAT_COLS = [["menos de", "10 millones"], ["10 a 50", "millones"], ["50 a 200", "millones"], ["200 a 1.000", "millones"], ["más de", "1.000 millones"]];
+  const HEAT = [
+    ["Contratación directa", [[3.2, 680, 0.24], [5.9, 1033, 0.44], [11.2, 988, 0.83], [14.9, 810, 1.10], [33.5, 427, 2.47]]],
+    ["Contratación directa (con ofertas)", [[4.8, 673, 0.35], [7.9, 1283, 0.58], [10.3, 1199, 0.76], [14.5, 1135, 1.07], [28.7, 711, 2.12]]],
+    ["Contratación régimen especial", [[4.6, 5289, 0.34], [8.7, 6776, 0.64], [13.7, 4430, 1.01], [19.3, 2307, 1.42], [27.9, 448, 2.06]]],
+    ["Contratación régimen especial (con ofertas)", [[9.5, 1359, 0.70], [15.1, 1544, 1.11], [22.1, 1399, 1.63], [31.4, 1299, 2.32], [41.4, 553, 3.06]]],
+    ["Licitación pública", [null, null, null, [25.7, 725, 1.89], [41.5, 1358, 3.06]]],
+    ["Mínima cuantía", [[5.8, 33436, 0.43], [11.4, 62892, 0.84], [17.4, 21328, 1.28], null, null]],
+    ["Selección abreviada de menor cuantía", [null, [11.0, 618, 0.81], [16.0, 3920, 1.18], [23.0, 3821, 1.70], [35.7, 406, 2.64]]],
+    ["Selección abreviada subasta inversa", [[11.1, 541, 0.82], [12.9, 2989, 0.95], [16.4, 12277, 1.21], [23.0, 13155, 1.70], [32.2, 3945, 2.38]]]
+  ];
+  // cobertura_focalizacion.csv: % de los contratos revisados frente a % de las desviaciones detectadas.
+  const COBERTURA = [[0, 0], [10, 20.9], [20, 35.7], [30, 48.3], [40, 59.4], [50, 68.0], [60, 76.4], [70, 84.6], [80, 91.7], [90, 96.0], [100, 100]];
+  // umbrales_focalizacion.csv: [nivel, % de los contratos, % de las desviaciones, % que se desvía].
+  const NIVELES = [["Nivel 1", 5.1, 12.4, 33.2], ["Nivel 2", 14.5, 28.5, 26.6]];
+  // frente_calidad_reporte.csv: [sector, % sin pago, contratos, % desviación, % esperado por su
+  // mezcla de valor y modalidad, marca: -1 se desvía menos de lo esperado, 1 más, 0 sin marca].
+  const SECTORES = [
+    ["Salud y protección social", 74.2, 22037, 13.31, 13.54, 0],
+    ["Interior", 72.9, 1172, 13.40, 11.51, 0],
+    ["Agricultura", 72.5, 1254, 12.76, 14.39, 0],
+    ["Transporte", 70.1, 4655, 10.76, 14.34, -1],
+    ["Trabajo", 32.6, 14759, 19.32, 13.30, 1]
+  ];
+
+  /* ------------------------------------------------------------------
+     Utilidades
+     ------------------------------------------------------------------ */
+  const NS = "http://www.w3.org/2000/svg";
+  const RAMPA = ["#FFF3C7", "#FFD84D", "#E6AF00", "#B08300", "#6B4F00"];
+
+  function E(tag, at, padre) {
+    const n = document.createElementNS(NS, tag);
+    if (at) for (const k in at) n.setAttribute(k, at[k]);
+    if (padre) padre.appendChild(n);
+    return n;
+  }
+  function T(padre, x, y, s, at) {
+    const n = E("text", Object.assign({ x: x, y: y }, at || {}), padre);
+    n.textContent = s;
+    return n;
+  }
+  // Formato colombiano fijo: punto de miles y coma decimal, sin depender del navegador.
+  function num(v, d) {
+    const partes = Math.abs(v).toFixed(d).split(".");
+    const entero = partes[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return (v < 0 ? "−" : "") + entero + (d > 0 ? "," + partes[1] : "");
+  }
+  function lienzo(id, etiqueta) {
+    const c = document.getElementById(id);
+    const w = Math.floor(c.clientWidth), h = Math.floor(c.clientHeight);
+    const s = E("svg", { viewBox: "0 0 " + w + " " + h, width: w, height: h, role: "img", "aria-label": etiqueta }, c);
+    return { s: s, w: w, h: h };
+  }
+  function barraH(x, y, w, h, r) {
+    r = Math.min(r, w, h / 2);
+    return "M" + x + "," + y + "H" + (x + w - r) + "Q" + (x + w) + "," + y + " " + (x + w) + "," + (y + r) +
+      "V" + (y + h - r) + "Q" + (x + w) + "," + (y + h) + " " + (x + w - r) + "," + (y + h) + "H" + x + "Z";
+  }
+  function mezclar(a, b, f) {
+    const pa = [1, 3, 5].map(function (k) { return parseInt(a.substr(k, 2), 16); });
+    const pb = [1, 3, 5].map(function (k) { return parseInt(b.substr(k, 2), 16); });
+    return "#" + pa.map(function (v, k) { return Math.round(v + (pb[k] - v) * f).toString(16).padStart(2, "0"); }).join("");
+  }
+  // Escala secuencial de un solo tono, de amarillo claro a ocre oscuro.
+  function rampa(t) {
+    t = Math.max(0, Math.min(1, t));
+    const n = RAMPA.length - 1;
+    const i = Math.min(n - 1, Math.floor(t * n));
+    return mezclar(RAMPA[i], RAMPA[i + 1], t * n - i);
+  }
+  // Evita que un «%» o un número queden solos al comienzo de una línea.
+  function noPartir(raiz) {
+    const w = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT);
+    const nodos = [];
+    while (w.nextNode()) nodos.push(w.currentNode);
+    nodos.forEach(function (n) {
+      if (n.parentNode.closest("svg, script, style")) return;
+      const t = n.nodeValue.replace(/(\d) (%|×)/g, "$1 $2").replace(/([≥≤<>=→−]) (\d)/g, "$1 $2");
+      if (t !== n.nodeValue) n.nodeValue = t;
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     Gráficos
+     ------------------------------------------------------------------ */
+  function graficoHeatmap() {
+    const L = lienzo("g-heatmap", "Porcentaje de contratos que se desvían según modalidad y valor"), s = L.s;
+    const m = { izq: 360, der: 8, arr: 108, aba: 60 };
+    const nc = HEAT_COLS.length, nf = HEAT.length, max = 45;
+    const cw = (L.w - m.izq - m.der) / nc, ch = (L.h - m.arr - m.aba) / nf;
+    const defs = E("defs", null, s);
+    const pat = E("pattern", { id: "rayado", width: 8, height: 8, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" }, defs);
+    E("rect", { width: 8, height: 8, fill: "#F4F4F1" }, pat);
+    E("line", { x1: 0, y1: 0, x2: 0, y2: 8, stroke: "#E0E0DB", "stroke-width": 3 }, pat);
+    T(s, m.izq, 22, "Valor del contrato, en millones de pesos corrientes  →", { class: "g-eje-tit fuerte" });
+    HEAT_COLS.forEach(function (c, j) {
+      const cx = m.izq + j * cw + cw / 2;
+      T(s, cx, 64, c[0], { class: "g-cat", "text-anchor": "middle" });
+      T(s, cx, 88, c[1], { class: "g-cat", "text-anchor": "middle" });
+    });
+    T(s, m.izq - 16, 88, "Modalidad de contratación  ↓", { class: "g-eje-tit fuerte", "text-anchor": "end" });
+    HEAT.forEach(function (fila, i) {
+      const y = m.arr + i * ch;
+      T(s, m.izq - 16, y + ch / 2 + 6, fila[0], { class: "g-cat", "text-anchor": "end" });
+      fila[1].forEach(function (d, j) {
+        const x = m.izq + j * cw, rango = HEAT_COLS[j].join(" ");
+        if (!d) {
+          E("rect", { x: x + 1.5, y: y + 1.5, width: cw - 3, height: ch - 3, rx: 4, fill: "url(#rayado)",
+            "data-tip": "<b>" + fila[0] + "</b> · " + rango + "<br>Menos de 300 contratos: la tasa no se reporta." }, s);
+          T(s, x + cw / 2, y + ch / 2 + 5, "—", { class: "g-tick", "text-anchor": "middle" });
+          return;
+        }
+        const t = d[0] / max;
+        E("rect", { x: x + 1.5, y: y + 1.5, width: cw - 3, height: ch - 3, rx: 4, fill: rampa(t),
+          "data-tip": "<b>" + fila[0] + "</b> · " + rango + "<br>" + num(d[0], 1) + " % se desvía · " + num(d[1], 0) +
+            " contratos<br>" + num(d[2], 2) + " veces la tasa global" }, s);
+        T(s, x + cw / 2, y + ch / 2 + 6, num(d[0], 1) + " %", { class: "g-celda", "text-anchor": "middle", fill: t > 0.8 ? "#FFFFFF" : "#141414", "pointer-events": "none" });
+      });
+    });
+    const lx = m.izq, ly = L.h - 32, lw = 300;
+    const grad = E("linearGradient", { id: "grad-heat" }, defs);
+    RAMPA.forEach(function (c, k) { E("stop", { offset: (k / (RAMPA.length - 1) * 100) + "%", "stop-color": c }, grad); });
+    E("rect", { x: lx, y: ly, width: lw, height: 12, rx: 3, fill: "url(#grad-heat)" }, s);
+    [0, 15, 30, 45].forEach(function (t) { T(s, lx + t / max * lw, ly + 30, t + " %", { class: "g-tick", "text-anchor": "middle" }); });
+    T(s, lx + lw + 18, ly + 11, "% de contratos con desviación · en blanco: menos de 300 contratos", { class: "g-tick" });
+  }
+
+  function graficoCobertura() {
+    const L = lienzo("g-cobertura", "Curva de cobertura de la tabla de riesgo frente a una revisión al azar"), s = L.s;
+    const m = { izq: 78, der: 26, arr: 20, aba: 70 };
+    const W = L.w - m.izq - m.der, H = L.h - m.arr - m.aba;
+    const x = function (v) { return m.izq + v / 100 * W; };
+    const y = function (v) { return m.arr + H - v / 100 * H; };
+    [0, 20, 40, 60, 80, 100].forEach(function (t) {
+      E("line", { x1: x(t), x2: x(t), y1: m.arr, y2: m.arr + H, class: "g-grid" }, s);
+      E("line", { x1: m.izq, x2: m.izq + W, y1: y(t), y2: y(t), class: "g-grid" }, s);
+      T(s, x(t), m.arr + H + 24, t + " %", { class: "g-tick", "text-anchor": "middle" });
+      T(s, m.izq - 10, y(t) + 5, t + " %", { class: "g-tick", "text-anchor": "end" });
+    });
+    const curva = COBERTURA.map(function (p) { return x(p[0]) + "," + y(p[1]); });
+    const diag = COBERTURA.slice().reverse().map(function (p) { return x(p[0]) + "," + y(p[0]); });
+    E("path", { d: "M" + curva.join("L") + "L" + diag.join("L") + "Z", class: "g-area" }, s);
+    E("line", { x1: x(0), y1: y(0), x2: x(100), y2: y(100), class: "g-azar" }, s);
+    E("path", { d: "M" + curva.join("L"), class: "g-linea" }, s);
+    E("line", { x1: m.izq, x2: m.izq, y1: m.arr, y2: m.arr + H, class: "g-eje" }, s);
+    E("line", { x1: m.izq, x2: m.izq + W, y1: m.arr + H, y2: m.arr + H, class: "g-eje" }, s);
+    T(s, m.izq + W / 2, L.h - 18, "% de los contratos revisados, de mayor a menor riesgo", { class: "g-eje-tit", "text-anchor": "middle" });
+    const ty = T(s, 18, m.arr + H / 2, "% de las desviaciones detectadas", { class: "g-eje-tit", "text-anchor": "middle" });
+    ty.setAttribute("transform", "rotate(-90 18 " + (m.arr + H / 2) + ")");
+
+    // Leyenda arriba a la izquierda, donde la curva no pasa.
+    const lx = x(4), ly = y(92);
+    E("line", { x1: lx, x2: lx + 36, y1: ly, y2: ly, class: "g-linea" }, s);
+    T(s, lx + 46, ly + 5, "Con la tabla de riesgo", { class: "g-anot-2" });
+    E("line", { x1: lx, x2: lx + 36, y1: ly + 28, y2: ly + 28, class: "g-azar" }, s);
+    T(s, lx + 46, ly + 33, "Revisión al azar", { class: "g-anot-2" });
+
+    // Guía que sigue al cursor, dibujada antes de los marcadores para no taparlos.
+    const guia = E("g", { visibility: "hidden" }, s);
+    const gl = E("line", { y1: m.arr, y2: m.arr + H, class: "g-guia-l" }, guia);
+    const gp = E("circle", { r: 6, class: "g-guia-p" }, guia);
+    const zona = E("rect", { x: m.izq, y: m.arr, width: W, height: H, fill: "transparent", class: "zona-guia" }, s);
+    zona.addEventListener("mousemove", function (ev) {
+      const pt = s.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
+      const p = pt.matrixTransform(s.getScreenCTM().inverse());
+      const xv = Math.max(0, Math.min(100, (p.x - m.izq) / W * 100));
+      let k = 1; while (k < COBERTURA.length - 1 && COBERTURA[k][0] < xv) k++;
+      const a = COBERTURA[k - 1], b = COBERTURA[k];
+      const yv = a[1] + (b[1] - a[1]) * (xv - a[0]) / (b[0] - a[0]);
+      gl.setAttribute("x1", x(xv)); gl.setAttribute("x2", x(xv));
+      gp.setAttribute("cx", x(xv)); gp.setAttribute("cy", y(yv));
+      guia.setAttribute("visibility", "visible");
+      mostrarTip("Revisando el <b>" + num(xv, 0) + " %</b> de los contratos se detecta el <b>" + num(yv, 0) +
+        " %</b> de las desviaciones.<br>Al azar se detectaría el " + num(xv, 0) + " %.", ev);
+    });
+    zona.addEventListener("mouseleave", function () { guia.setAttribute("visibility", "hidden"); ocultarTip(); });
+
+    // Anotación del mensaje principal: 30 % revisado, 48 % detectado.
+    E("line", { x1: x(30), x2: x(30), y1: y(48.3), y2: y(30), class: "g-guia-l", "pointer-events": "none" }, s);
+    E("circle", { cx: x(30), cy: y(48.3), r: 7, fill: "#141414", "pointer-events": "none" }, s);
+    T(s, x(30) + 14, y(48.3) + 26, "30 % revisado → 48 % detectado", { class: "g-anot", "pointer-events": "none" });
+    NIVELES.forEach(function (u, k) {
+      const mx = x(u[1]), my = y(u[2]);
+      if (k === 0) {
+        // Junto al origen no cabe a la izquierda: va debajo de la diagonal, con una línea guía.
+        E("line", { x1: mx + 7, y1: my + 8, x2: mx + 20, y2: my + 38, stroke: "#141414", "stroke-width": 1.2, "pointer-events": "none" }, s);
+        T(s, mx + 22, my + 54, u[0].toLowerCase(), { class: "g-anot", "pointer-events": "none" });
+      } else {
+        T(s, mx - 16, my - 12, u[0].toLowerCase(), { class: "g-anot", "text-anchor": "end", "pointer-events": "none" });
+      }
+      E("circle", { cx: mx, cy: my, r: 10, class: "g-umbral",
+        "data-tip": "<b>" + u[0] + "</b><br>" + num(u[1], 1) + " % de los contratos · " + num(u[2], 1) +
+          " % de las desviaciones<br>se desvía el " + num(u[3], 1) + " % de los contratos revisados" }, s);
+    });
+  }
+
+  function graficoSectores() {
+    const L = lienzo("g-sectores", "Porcentaje de contratos sin pago reportado en los sectores extremos"), s = L.s;
+    const m = { izq: 250, der: 250, arr: 36, aba: 40 };
+    const W = L.w - m.izq - m.der, H = L.h - m.arr - m.aba, max = 80;
+    const x = function (v) { return m.izq + v / max * W; };
+    [0, 20, 40, 60, 80].forEach(function (t) {
+      E("line", { x1: x(t), x2: x(t), y1: m.arr - 6, y2: m.arr + H, class: "g-grid" }, s);
+      T(s, x(t), m.arr + H + 24, t + " %", { class: "g-tick", "text-anchor": "middle" });
+    });
+    const paso = H / SECTORES.length, g = Math.min(40, paso * 0.62), marcas = [];
+    SECTORES.forEach(function (d, i) {
+      const y = m.arr + i * paso + (paso - g) / 2, cy = y + g / 2;
+      if (i === SECTORES.length - 1) {
+        E("line", { x1: 0, x2: L.w, y1: m.arr + i * paso - 2, y2: m.arr + i * paso - 2, class: "g-sep" }, s);
+      }
+      T(s, m.izq - 14, cy + 6, d[0], { class: "g-cat", "text-anchor": "end" });
+      E("path", { d: barraH(m.izq, y, x(d[1]) - m.izq, g, 4), class: "g-barra",
+        "data-tip": "<b>" + d[0] + "</b><br>" + num(d[1], 1) + " % sin pago reportado · " + num(d[2], 0) + " contratos" }, s);
+      const tv = T(s, x(d[1]) + 10, cy + 6, num(d[1], 1) + " %", { class: "g-val" });
+      if (d[5] !== 0) {
+        // Marca a los dos extremos: desviación observada frente a la esperada por su mezcla.
+        const bb = tv.getBBox(), mx = bb.x + bb.width + 12;
+        const marca = E("g", { "data-tip": "<b>" + d[0] + "</b><br>Se desvía el " + num(d[3], 1) +
+          " % de sus contratos; por su mezcla de valor y modalidad se esperaría el " + num(d[4], 1) + " %." }, s);
+        const fondo = E("rect", { x: mx, y: cy - 12, height: 24, rx: 4, fill: "#141414" }, marca);
+        const et = T(marca, mx + 10, cy + 4.5, (d[5] < 0 ? "▼ se desvía menos de lo esperado" : "▲ se desvía más de lo esperado"),
+          { class: "g-marca", "pointer-events": "none" });
+        fondo.setAttribute("width", et.getBBox().width + 20);
+        marcas.push(marca);
+      }
+    });
+    E("line", { x1: m.izq, x2: m.izq, y1: m.arr - 6, y2: m.arr + H, class: "g-eje" }, s);
+    const xr = x(54.7);
+    E("line", { x1: xr, x2: xr, y1: m.arr - 12, y2: m.arr + H, class: "g-ref" }, s);
+    T(s, xr + 8, m.arr - 16, "media de todos los contratos: 54,7 %", { class: "g-ref-etq" });
+    // Las marcas van encima de la línea de la media, que de otro modo cruza su texto.
+    marcas.forEach(function (n) { s.appendChild(n); });
+  }
+
+  /* ------------------------------------------------------------------
+     Información al pasar el cursor
+     ------------------------------------------------------------------ */
+  const tip = document.getElementById("tip");
+  function moverTip(ev) {
+    const pad = 16, r = tip.getBoundingClientRect();
+    let left = ev.clientX + pad, top = ev.clientY + pad;
+    if (left + r.width > window.innerWidth - 8) left = ev.clientX - r.width - pad;
+    if (top + r.height > window.innerHeight - 8) top = ev.clientY - r.height - pad;
+    tip.style.left = Math.max(8, left) + "px";
+    tip.style.top = Math.max(8, top) + "px";
+  }
+  function mostrarTip(html, ev) { tip.innerHTML = html; tip.hidden = false; moverTip(ev); }
+  function ocultarTip() { tip.hidden = true; }
+  document.addEventListener("mouseover", function (ev) {
+    const t = ev.target.closest ? ev.target.closest("[data-tip]") : null;
+    if (t && t.getAttribute("data-tip")) mostrarTip(t.getAttribute("data-tip"), ev);
+    else if (!(ev.target.closest && ev.target.closest(".zona-guia"))) ocultarTip();
+  });
+  document.addEventListener("mousemove", function (ev) { if (!tip.hidden) moverTip(ev); });
+
+  /* ------------------------------------------------------------------
+     Láminas, escala y navegación
+     ------------------------------------------------------------------ */
+  const escenario = document.getElementById("escenario");
+  const laminas = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  const total = laminas.length;
+  const progreso = document.getElementById("progreso");
+  const contador = document.getElementById("contador");
+  const indice = document.getElementById("indice");
+  const lista = document.getElementById("ind-lista");
+  let actual = 0;
+
+  laminas.forEach(function (l, i) {
+    l.setAttribute("aria-roledescription", "lámina");
+    l.setAttribute("aria-label", (i + 1) + " de " + total + ": " + l.dataset.titulo);
+    if (!l.classList.contains("sin-pie")) {
+      const pie = document.createElement("footer");
+      pie.className = "pie";
+      pie.innerHTML = "<span>Universidad de los Andes · MINE-4101 Ciencia de Datos Aplicada · Taller 1</span><span class=\"num\">" + (i + 1) + " / " + total + "</span>";
+      l.appendChild(pie);
+    }
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.href = "#" + (i + 1);
+    a.textContent = l.dataset.titulo;
+    a.addEventListener("click", function (ev) { ev.preventDefault(); cerrarIndice(); ir(i); });
+    li.appendChild(a);
+    lista.appendChild(li);
+  });
+
+  function escalar() {
+    const k = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
+    const dx = (window.innerWidth - 1600 * k) / 2, dy = (window.innerHeight - 900 * k) / 2;
+    escenario.style.transform = "translate(" + dx + "px," + dy + "px) scale(" + k + ")";
+  }
+  // El diagrama tiene un tamaño de diseño fijo; si el título ocupa más de lo
+  // previsto, se reduce para no invadir el pie.
+  function ajustarDiagramas() {
+    document.querySelectorAll(".ajustable").forEach(function (c) {
+      const hijo = c.firstElementChild;
+      hijo.style.transform = "none";
+      const k = Math.min(1, c.clientWidth / hijo.offsetWidth, c.clientHeight / hijo.offsetHeight);
+      if (k < 1) hijo.style.transform = "scale(" + k + ")";
+    });
+  }
+  function ir(n) {
+    n = Math.max(0, Math.min(total - 1, n));
+    laminas[actual].classList.remove("activa");
+    actual = n;
+    laminas[actual].classList.add("activa");
+    progreso.style.width = ((actual + 1) / total * 100) + "%";
+    contador.textContent = (actual + 1) + " / " + total;
+    ocultarTip();
+    try { history.replaceState(null, "", "#" + (actual + 1)); } catch (e) { /* algunos navegadores lo impiden en file:// */ }
+  }
+  function abrirIndice() { indice.hidden = false; const a = lista.querySelectorAll("a")[actual]; if (a) a.focus(); }
+  function cerrarIndice() { indice.hidden = true; }
+
+  document.addEventListener("keydown", function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+    const k = ev.key;
+    if (!indice.hidden) {
+      if (k === "Escape" || k === "i" || k === "I") { cerrarIndice(); ev.preventDefault(); }
+      return;
+    }
+    if (k === "ArrowRight" || k === "PageDown" || (k === " " && !ev.shiftKey) || k === "Enter") { ir(actual + 1); ev.preventDefault(); }
+    else if (k === "ArrowLeft" || k === "PageUp" || (k === " " && ev.shiftKey) || k === "Backspace") { ir(actual - 1); ev.preventDefault(); }
+    else if (k === "Home") { ir(0); ev.preventDefault(); }
+    else if (k === "End") { ir(total - 1); ev.preventDefault(); }
+    else if (k === "f" || k === "F") { pantallaCompleta(); }
+    else if (k === "i" || k === "I" || k === "Escape") { abrirIndice(); ev.preventDefault(); }
+  });
+  function pantallaCompleta() {
+    if (!document.fullscreenElement) { if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); }
+    else if (document.exitFullscreen) document.exitFullscreen();
+  }
+  document.getElementById("b-prev").addEventListener("click", function () { ir(actual - 1); });
+  document.getElementById("b-next").addEventListener("click", function () { ir(actual + 1); });
+  document.getElementById("b-ind").addEventListener("click", abrirIndice);
+  document.getElementById("b-fs").addEventListener("click", pantallaCompleta);
+  indice.addEventListener("click", function (ev) { if (ev.target === indice) cerrarIndice(); });
+
+  // Deslizar en pantallas táctiles.
+  let x0 = null;
+  document.addEventListener("touchstart", function (ev) { x0 = ev.touches[0].clientX; }, { passive: true });
+  document.addEventListener("touchend", function (ev) {
+    if (x0 === null) return;
+    const dx = ev.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 50) ir(actual + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
+
+  // Los controles desaparecen cuando el ratón no se mueve.
+  const controles = document.getElementById("controles");
+  let reposo = null;
+  function despertar() {
+    controles.classList.remove("dormido");
+    clearTimeout(reposo);
+    reposo = setTimeout(function () { controles.classList.add("dormido"); }, 2500);
+  }
+  document.addEventListener("mousemove", despertar);
+  window.addEventListener("resize", escalar);
+  window.addEventListener("hashchange", function () {
+    const n = parseInt(location.hash.slice(1), 10);
+    if (!isNaN(n) && n - 1 !== actual) ir(n - 1);
+  });
+
+  /* ------------------------------------------------------------------
+     Arranque: las láminas ocultas conservan su tamaño, así que los
+     gráficos se dibujan al inicio con sus medidas reales.
+     ------------------------------------------------------------------ */
+  noPartir(escenario);
+  escalar();
+  ajustarDiagramas();
+  [graficoHeatmap, graficoCobertura, graficoSectores].forEach(function (f) {
+    try { f(); } catch (e) { console.error("No se pudo dibujar " + f.name, e); }
+  });
+  const inicial = parseInt(location.hash.slice(1), 10);
+  laminas[0].classList.add("activa");
+  ir(isNaN(inicial) ? 0 : inicial - 1);
+  despertar();
+})();
+</script>
+</body>
+</html>

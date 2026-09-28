@@ -1,0 +1,22 @@
+id,regla,severidad,violaciones,pct,cumple
+R01,valor_del_contrato >= 0,Critica,0,0.0,True
+R02,"valor_pagado, valor_facturado y valor_pendiente_de_pago >= 0",Critica,144,0.0733,False
+R03,valor_pagado <= valor_del_contrato,Alta,177,0.0901,False
+R04,valor_facturado <= valor_del_contrato,Alta,214,0.109,False
+R05,valor_pagado <= valor_facturado,Media,0,0.0,True
+R06,valor_del_contrato ~= valor_pagado + valor_pendiente_de_pago (tol. 1%),Alta,50,0.0255,False
+R07,fecha_de_firma <= fecha_de_inicio_del_contrato,Alta,13047,6.6434,False
+R08,fecha_de_inicio_del_contrato <= fecha_de_fin_del_contrato,Critica,125,0.0636,False
+R09,"todas las fechas dentro de [2010, 2031]",Critica,20,0.0102,False
+R10,duración declarada ~= fecha_fin - fecha_inicio (tol. 10% o 7 días),Media,50535,25.7318,False
+R11,dias_adicionados dentro de un rango plausible (<= 1.095 días),Media,1,0.0005,False
+R12,estado 'terminado' o 'cerrado' implica fecha_de_fin <= hoy,Media,13,0.0066,False
+R13,estado 'cerrado' implica valor_pendiente_de_pago == 0,Media,25782,13.1279,False
+R14,dias_adicionados > 0 implica el_contrato_puede_ser_prorrogado = 'Si',Baja,13726,6.9891,False
+R15,id_contrato es único,Critica,0,0.0,True
+R16,documento_proveedor y proveedor_adjudicado son consistentes 1:1 (excluye centinelas),Media,5332,2.715,False
+R18,codigo_de_categoria_principal cumple el patrón V1.<8 dígitos>,Media,4779,2.4334,False
+R19,urlproceso apunta a un proceso real (contiene noticeUID),Baja,29,0.0148,False
+R20,valor_del_contrato > 0,Alta,188,0.0957,False
+R21,valor_del_contrato <= 1 billon COP (plausibilidad macro),Critica,4,0.002,False
+R22,duración del contrato es parseable a un número de días,Alta,20819,10.6008,False

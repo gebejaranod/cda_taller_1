@@ -1,0 +1,13 @@
+hipotesis,prueba,supuesto,cumple,diagnostico
+H1,chi2 de independencia,frecuencia esperada >= 5 en todas las celdas,si,frecuencia esperada minima = 22.4
+H2,Correlacion de Pearson,ambas variables numericas; Spearman no exige relacion lineal,si,
+H2b,Z test de dos medias,n >= 30 por grupo (TCL),si,"asimetria de los grupos = +0.11 / -0.78; grupos de 26,603 y 169,788 obs."
+H3,chi2 de independencia,frecuencia esperada >= 5 en todas las celdas,si,"frecuencia esperada minima = 4,333.6"
+H4-orden,chi2 de independencia,frecuencia esperada >= 5 en todas las celdas,si,frecuencia esperada minima = 229.0
+H4-sector,chi2 de independencia,frecuencia esperada >= 5 en todas las celdas,si,frecuencia esperada minima = 175.3
+H5-el_contrato_puede_ser_prorrogado,chi2 de independencia,frecuencia esperada >= 5 en todas las celdas,si,"frecuencia esperada minima = 3,651.8"
+H5-habilita_pago_adelantado,chi2 de independencia,frecuencia esperada >= 5 en todas las celdas,si,frecuencia esperada minima = 33.3
+H6,ANOVA de Welch,n >= 30 por grupo (TCL); Welch no exige varianzas iguales,si,razon de varianzas = 12.6x; asimetria maxima = 6.05; grupo mas pequeno = 34 obs.
+H7,chi2 de independencia,frecuencia esperada >= 5 en todas las celdas,si,frecuencia esperada minima = 283.8
+H8-orden,chi2 de independencia,frecuencia esperada >= 5 en todas las celdas,si,"frecuencia esperada minima = 1,091.0"
+H8-sector,chi2 de independencia,frecuencia esperada >= 5 en todas las celdas,si,frecuencia esperada minima = 811.9

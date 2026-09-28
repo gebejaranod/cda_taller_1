@@ -1,0 +1,46 @@
+modalidad,banda_valor,contratos,desviaciones,tasa_%,IC_lo_%,IC_hi_%,estable,tasa_regla_%,eficiencia
+Licitación pública,> 1.000 M,1358,563,41.46,38.84,44.08,True,41.46,3.06
+Contratación régimen especial (con ofertas),> 1.000 M,553,229,41.41,37.31,45.52,True,41.41,3.06
+Selección abreviada de menor cuantía,> 1.000 M,406,145,35.71,31.05,40.38,True,35.71,2.64
+Mínima cuantía,> 1.000 M,21,6,28.57,9.25,47.89,False,34.2,2.52
+Otros,> 1.000 M,75,30,40.0,28.91,51.09,False,34.2,2.52
+Contratación directa,> 1.000 M,427,143,33.49,29.01,37.97,True,33.49,2.47
+Selección abreviada subasta inversa,> 1.000 M,3945,1272,32.24,30.78,33.7,True,32.24,2.38
+Contratación régimen especial (con ofertas),200–1.000 M,1299,408,31.41,28.88,33.93,True,31.41,2.32
+Contratación directa (con ofertas),> 1.000 M,711,204,28.69,25.37,32.02,True,28.69,2.12
+Contratación régimen especial,> 1.000 M,448,125,27.9,23.75,32.06,True,27.9,2.06
+Licitación pública,200–1.000 M,725,186,25.66,22.48,28.83,True,25.66,1.89
+Selección abreviada subasta inversa,200–1.000 M,13155,3030,23.03,22.31,23.75,True,23.03,1.7
+Selección abreviada de menor cuantía,200–1.000 M,3821,879,23.0,21.67,24.34,True,23.0,1.7
+Mínima cuantía,200–1.000 M,76,34,44.74,33.56,55.92,False,22.59,1.67
+Otros,200–1.000 M,74,18,24.32,14.55,34.1,False,22.59,1.67
+Contratación régimen especial (con ofertas),50–200 M,1399,309,22.09,19.91,24.26,True,22.09,1.63
+Contratación régimen especial,200–1.000 M,2307,445,19.29,17.68,20.9,True,19.29,1.42
+Mínima cuantía,50–200 M,21328,3703,17.36,16.85,17.87,True,17.36,1.28
+Licitación pública,50–200 M,156,38,24.36,17.62,31.09,False,16.51,1.22
+Otros,50–200 M,55,22,40.0,27.05,52.95,False,16.51,1.22
+Selección abreviada subasta inversa,50–200 M,12277,2014,16.4,15.75,17.06,True,16.4,1.21
+Selección abreviada de menor cuantía,50–200 M,3920,626,15.97,14.82,17.12,True,15.97,1.18
+Contratación régimen especial (con ofertas),10–50 M,1544,233,15.09,13.31,16.88,True,15.09,1.11
+Contratación directa,200–1.000 M,810,121,14.94,12.48,17.39,True,14.94,1.1
+Contratación directa (con ofertas),200–1.000 M,1135,165,14.54,12.49,16.59,True,14.54,1.07
+Contratación régimen especial,50–200 M,4430,608,13.72,12.71,14.74,True,13.72,1.01
+Selección abreviada subasta inversa,10–50 M,2989,385,12.88,11.68,14.08,True,12.88,0.95
+Mínima cuantía,10–50 M,62892,7146,11.36,11.11,11.61,True,11.36,0.84
+Contratación directa,50–200 M,988,111,11.23,9.27,13.2,True,11.23,0.83
+Otros,10–50 M,24,3,12.5,-0.73,25.73,False,11.13,0.82
+Licitación pública,10–50 M,65,7,10.77,3.23,18.31,False,11.13,0.82
+Selección abreviada subasta inversa,< 10 M,541,60,11.09,8.44,13.74,True,11.09,0.82
+Selección abreviada de menor cuantía,10–50 M,618,68,11.0,8.54,13.47,True,11.0,0.81
+Contratación directa (con ofertas),50–200 M,1199,124,10.34,8.62,12.07,True,10.34,0.76
+Contratación régimen especial (con ofertas),< 10 M,1359,129,9.49,7.93,11.05,True,9.49,0.7
+Contratación régimen especial,10–50 M,6776,591,8.72,8.05,9.39,True,8.72,0.64
+Contratación directa (con ofertas),10–50 M,1283,101,7.87,6.4,9.35,True,7.87,0.58
+Contratación directa,10–50 M,1033,61,5.91,4.47,7.34,True,5.91,0.44
+Mínima cuantía,< 10 M,33436,1956,5.85,5.6,6.1,True,5.85,0.43
+Selección abreviada de menor cuantía,< 10 M,57,3,5.26,-0.53,11.06,False,5.82,0.43
+Licitación pública,< 10 M,26,4,15.38,1.52,29.25,False,5.82,0.43
+Otros,< 10 M,8,0,0.0,0.0,0.0,False,5.82,0.43
+Contratación directa (con ofertas),< 10 M,673,32,4.75,3.15,6.36,True,4.75,0.35
+Contratación régimen especial,< 10 M,5289,244,4.61,4.05,5.18,True,4.61,0.34
+Contratación directa,< 10 M,680,22,3.24,1.91,4.57,True,3.24,0.24
